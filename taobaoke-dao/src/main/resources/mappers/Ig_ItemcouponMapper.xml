@@ -1,0 +1,467 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.igogogo.dao.Ig_ItemcouponMapper">
+	<resultMap id="BaseResultMap" type="com.igogogo.domain.Ig_Itemcoupon">
+		<id column="itemcouponId" property="itemcouponId" jdbcType="INTEGER" />
+		<result column="numIid" property="numIid" jdbcType="BIGINT" />
+		<result column="title" property="title" jdbcType="VARCHAR" />
+		<result column="itemUrl" property="itemUrl" jdbcType="VARCHAR" />
+		<result column="couponClickUrl" property="couponClickUrl"
+			jdbcType="VARCHAR" />
+		<result column="couponInfo" property="couponInfo" jdbcType="VARCHAR" />
+		<result column="pictUrl" property="pictUrl" jdbcType="VARCHAR" />
+		<result column="smallImages" property="smallImages" jdbcType="VARCHAR" />
+		<result column="itemDescription" property="itemDescription"
+			jdbcType="VARCHAR" />
+		<result column="sellerId" property="sellerId" jdbcType="BIGINT" />
+		<result column="couponAmount" property="couponAmount" jdbcType="VARCHAR" />
+		<result column="couponStartTime" property="couponStartTime"
+			jdbcType="VARCHAR" />
+		<result column="couponEndTime" property="couponEndTime"
+			jdbcType="VARCHAR" />
+		<result column="shopTitle" property="shopTitle" jdbcType="VARCHAR" />
+		<result column="volume" property="volume" jdbcType="BIGINT" />
+		<result column="reservePrice" property="reservePrice" jdbcType="DOUBLE" />
+		<result column="zkFinalPrice" property="zkFinalPrice" jdbcType="DOUBLE" />
+		<result column="addTime" property="addTime" jdbcType="TIMESTAMP" />
+		<result column="shortUrl" property="shortUrl" jdbcType="VARCHAR" />
+		<result column="tpwd" property="tpwd" jdbcType="VARCHAR" />
+		<association property="category" column="categoryId"
+			select="com.igogogo.dao.Ig_CategoryMapper.selectByPrimaryKey"></association>
+	</resultMap>
+	<sql id="Base_Column_List">
+		itemcouponId, numIid, title, itemUrl, couponClickUrl,
+		couponInfo, pictUrl,
+		smallImages,
+		itemDescription, sellerId,
+		couponAmount,couponStartTime, couponEndTime, shopTitle, volume,
+		reservePrice,zkFinalPrice,
+		categoryId, addTime, shortUrl,tpwd
+	</sql>
+
+	<select id="query" resultMap="BaseResultMap">
+		select
+		*
+		from ig_itemcoupon
+	</select>
+
+	<select id="queryById" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+		select
+		*
+		from ig_itemcoupon
+		where
+		itemcouponId =
+		#{itemcouponId,jdbcType=INTEGER}
+	</select>
+
+	<select id="queryCount" resultType="int">
+		select count(*) from
+		ig_itemcoupon
+	</select>
+
+	<select id="queryCountByKeyWord" resultType="int">
+		select count(*) from
+		ig_itemcoupon where title like CONCAT('%',#{title},'%')
+	</select>
+
+	<select id="queryByPage" resultMap="BaseResultMap"
+		parameterType="map">
+		select
+		*
+		from ig_itemcoupon
+		limit #{page},#{size}
+	</select>
+
+	<select id="queryKeyWordByPage" resultMap="BaseResultMap"
+		parameterType="map">
+		select
+		*
+		from ig_itemcoupon where title like
+		CONCAT('%',#{title},'%')
+		limit
+		#{page},#{size}
+	</select>
+
+	<select id="queryByCondition" resultMap="BaseResultMap"
+		parameterType="map">
+		select
+		*
+		from ig_itemcoupon
+		where ${columnname}
+		like
+		CONCAT('%',#{columnval},'%')
+	</select>
+
+	<select id="queryByConditionByPage" resultMap="BaseResultMap"
+		parameterType="map">
+		select
+		*
+		from ig_itemcoupon
+		<choose>
+			<when test="islike == 0">
+				where ${columnname} = ${columnval}
+			</when>
+			<otherwise>
+				where ${columnname} like CONCAT('%',#{columnval},'%')
+			</otherwise>
+		</choose>
+		limit
+		#{page},#{size}
+	</select>
+
+	<delete id="deleteByMoreId">
+		delete from ig_itemcoupon
+		where itemcouponId in
+		<foreach item="item" index="index" collection="list" open="("
+			separator="," close=")">
+			#{item}
+		</foreach>
+	</delete>
+
+	<select id="checkById" resultMap="BaseResultMap" parameterType="java.lang.Long">
+		select
+		<include refid="Base_Column_List" />
+		from ig_itemcoupon_temp
+		where numIid = #{numIid}
+	</select>
+
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
+		parameterType="java.lang.Integer">
+		select
+		<include refid="Base_Column_List" />
+		from ig_itemcoupon
+		where itemcouponId =
+		#{itemcouponId,jdbcType=INTEGER}
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+		delete from
+		ig_itemcoupon
+		where itemcouponId = #{itemcouponId,jdbcType=INTEGER}
+	</delete>
+
+	<insert id="insertSelective" parameterType="com.igogogo.domain.Ig_Itemcoupon">
+		insert into ig_itemcoupon
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="numIid != null">
+				numIid,
+			</if>
+			<if test="title != null">
+				title,
+			</if>
+			<if test="itemUrl != null">
+				itemUrl,
+			</if>
+			<if test="couponClickUrl != null">
+				couponClickUrl,
+			</if>
+			<if test="couponInfo != null">
+				couponInfo,
+			</if>
+			<if test="pictUrl != null">
+				pictUrl,
+			</if>
+			<if test="smallImages != null">
+				smallImages,
+			</if>
+			<if test="itemDescription != null">
+				itemDescription,
+			</if>
+			<if test="sellerId != null">
+				sellerId,
+			</if>
+			<if test="couponAmount != null">
+				couponAmount,
+			</if>
+			<if test="couponStartTime != null">
+				couponStartTime,
+			</if>
+			<if test="couponEndTime != null">
+				couponEndTime,
+			</if>
+			<if test="shopTitle != null">
+				shopTitle,
+			</if>
+			<if test="volume != null">
+				volume,
+			</if>
+			<if test="reservePrice != null">
+				reservePrice,
+			</if>
+			<if test="zkFinalPrice != null">
+				zkFinalPrice,
+			</if>
+			<if test="category != null and category.categoryid != null">
+				categoryId,
+			</if>
+			<if test="addTime != null">
+				addTime,
+			</if>
+			<if test="shortUrl != null">
+				shortUrl,
+			</if>
+			<if test="tpwd != null">
+				tpwd,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="numIid != null">
+				#{numIid,jdbcType=BIGINT},
+			</if>
+			<if test="title != null">
+				#{title,jdbcType=VARCHAR},
+			</if>
+			<if test="itemUrl != null">
+				#{itemUrl,jdbcType=VARCHAR},
+			</if>
+			<if test="couponClickUrl != null">
+				#{couponClickUrl,jdbcType=VARCHAR},
+			</if>
+			<if test="couponInfo != null">
+				#{couponInfo,jdbcType=VARCHAR},
+			</if>
+			<if test="pictUrl != null">
+				#{pictUrl,jdbcType=VARCHAR},
+			</if>
+			<if test="smallImages != null">
+				#{smallImages,jdbcType=VARCHAR},
+			</if>
+			<if test="itemDescription != null">
+				#{itemDescription,jdbcType=VARCHAR},
+			</if>
+			<if test="sellerId != null">
+				#{sellerId,jdbcType=BIGINT},
+			</if>
+			<if test="couponAmount != null">
+				#{couponAmount,jdbcType=VARCHAR},
+			</if>
+			<if test="couponStartTime != null">
+				#{couponStartTime,jdbcType=VARCHAR},
+			</if>
+			<if test="couponEndTime != null">
+				#{couponEndTime,jdbcType=VARCHAR},
+			</if>
+			<if test="shopTitle != null">
+				#{shopTitle,jdbcType=VARCHAR},
+			</if>
+			<if test="volume != null">
+				#{volume,jdbcType=BIGINT},
+			</if>
+			<if test="reservePrice != null">
+				#{reservePrice,jdbcType=DOUBLE},
+			</if>
+			<if test="zkFinalPrice != null">
+				#{zkFinalPrice,jdbcType=DOUBLE},
+			</if>
+			<if test="category != null and category.categoryid">
+				#{category.categoryid,jdbcType=INTEGER},
+			</if>
+			<if test="addTime != null">
+				#{addTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="shortUrl != null">
+				#{shortUrl,jdbcType=VARCHAR},
+			</if>
+			<if test="tpwd != null">
+				#{tpwd,jdbcType=VARCHAR},
+			</if>
+		</trim>
+	</insert>
+
+	<!-- 临时表操作 -->
+	<insert id="insertSelectiveTemp" parameterType="com.igogogo.domain.Ig_Itemcoupon">
+		insert into ig_itemcoupon_temp
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="numIid != null">
+				numIid,
+			</if>
+			<if test="title != null">
+				title,
+			</if>
+			<if test="itemUrl != null">
+				itemUrl,
+			</if>
+			<if test="couponClickUrl != null">
+				couponClickUrl,
+			</if>
+			<if test="couponInfo != null">
+				couponInfo,
+			</if>
+			<if test="pictUrl != null">
+				pictUrl,
+			</if>
+			<if test="smallImages != null">
+				smallImages,
+			</if>
+			<if test="itemDescription != null">
+				itemDescription,
+			</if>
+			<if test="sellerId != null">
+				sellerId,
+			</if>
+			<if test="couponAmount != null">
+				couponAmount,
+			</if>
+			<if test="couponStartTime != null">
+				couponStartTime,
+			</if>
+			<if test="couponEndTime != null">
+				couponEndTime,
+			</if>
+			<if test="shopTitle != null">
+				shopTitle,
+			</if>
+			<if test="volume != null">
+				volume,
+			</if>
+			<if test="reservePrice != null">
+				reservePrice,
+			</if>
+			<if test="zkFinalPrice != null">
+				zkFinalPrice,
+			</if>
+			<if test="category != null and category.categoryid != null">
+				categoryId,
+			</if>
+			<if test="addTime != null">
+				addTime,
+			</if>
+			<if test="shortUrl != null">
+				shortUrl,
+			</if>
+			<if test="tpwd != null">
+				tpwd,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="numIid != null">
+				#{numIid,jdbcType=BIGINT},
+			</if>
+			<if test="title != null">
+				#{title,jdbcType=VARCHAR},
+			</if>
+			<if test="itemUrl != null">
+				#{itemUrl,jdbcType=VARCHAR},
+			</if>
+			<if test="couponClickUrl != null">
+				#{couponClickUrl,jdbcType=VARCHAR},
+			</if>
+			<if test="couponInfo != null">
+				#{couponInfo,jdbcType=VARCHAR},
+			</if>
+			<if test="pictUrl != null">
+				#{pictUrl,jdbcType=VARCHAR},
+			</if>
+			<if test="smallImages != null">
+				#{smallImages,jdbcType=VARCHAR},
+			</if>
+			<if test="itemDescription != null">
+				#{itemDescription,jdbcType=VARCHAR},
+			</if>
+			<if test="sellerId != null">
+				#{sellerId,jdbcType=BIGINT},
+			</if>
+			<if test="couponAmount != null">
+				#{couponAmount,jdbcType=VARCHAR},
+			</if>
+			<if test="couponStartTime != null">
+				#{couponStartTime,jdbcType=VARCHAR},
+			</if>
+			<if test="couponEndTime != null">
+				#{couponEndTime,jdbcType=VARCHAR},
+			</if>
+			<if test="shopTitle != null">
+				#{shopTitle,jdbcType=VARCHAR},
+			</if>
+			<if test="volume != null">
+				#{volume,jdbcType=BIGINT},
+			</if>
+			<if test="reservePrice != null">
+				#{reservePrice,jdbcType=DOUBLE},
+			</if>
+			<if test="zkFinalPrice != null">
+				#{zkFinalPrice,jdbcType=DOUBLE},
+			</if>
+			<if test="category != null and category.categoryid">
+				#{category.categoryid,jdbcType=INTEGER},
+			</if>
+			<if test="addTime != null">
+				#{addTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="shortUrl != null">
+				#{shortUrl,jdbcType=VARCHAR},
+			</if>
+			<if test="tpwd != null">
+				#{tpwd,jdbcType=VARCHAR},
+			</if>
+		</trim>
+	</insert>
+
+
+	<update id="updateByPrimaryKeySelective" parameterType="com.igogogo.domain.Ig_Itemcoupon">
+		update ig_itemcoupon
+		<set>
+			<if test="numIid != null">
+				numIid = #{numIid,jdbcType=BIGINT},
+			</if>
+			<if test="title != null">
+				title = #{title,jdbcType=VARCHAR},
+			</if>
+			<if test="itemUrl != null">
+				itemUrl = #{itemUrl,jdbcType=VARCHAR},
+			</if>
+			<if test="couponClickUrl != null">
+				couponClickUrl = #{couponClickUrl,jdbcType=VARCHAR},
+			</if>
+			<if test="couponInfo != null">
+				couponInfo = #{couponInfo,jdbcType=VARCHAR},
+			</if>
+			<if test="pictUrl != null">
+				pictUrl = #{pictUrl,jdbcType=VARCHAR},
+			</if>
+			<if test="smallImages != null">
+				smallImages = #{smallImages,jdbcType=VARCHAR},
+			</if>
+			<if test="itemDescription != null">
+				itemDescription = #{itemDescription,jdbcType=VARCHAR},
+			</if>
+			<if test="sellerId != null">
+				sellerId = #{sellerId,jdbcType=BIGINT},
+			</if>
+			<if test="couponAmount != null">
+				couponAmount = #{couponAmount,jdbcType=VARCHAR},
+			</if>
+			<if test="couponStartTime != null">
+				couponStartTime = #{couponStartTime,jdbcType=VARCHAR},
+			</if>
+			<if test="couponEndTime != null">
+				couponEndTime = #{couponEndTime,jdbcType=VARCHAR},
+			</if>
+			<if test="shopTitle != null">
+				shopTitle = #{shopTitle,jdbcType=VARCHAR},
+			</if>
+			<if test="volume != null">
+				volume = #{volume,jdbcType=BIGINT},
+			</if>
+			<if test="reservePrice != null">
+				reservePrice = #{reservePrice,jdbcType=DOUBLE},
+			</if>
+			<if test="zkFinalPrice != null">
+				zkFinalPrice = #{zkFinalPrice,jdbcType=DOUBLE},
+			</if>
+			<if test="category != null and category.categoryid != null">
+				categoryId = #{category.categoryid,jdbcType=INTEGER},
+			</if>
+			<if test="addTime != null">
+				addTime = #{addTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="shortUrl != null">
+				shortUrl = #{shortUrl,jdbcType=VARCHAR},
+			</if>
+			<if test="tpwd != null">
+				tpwd = #{tpwd,jdbcType=VARCHAR},
+			</if>
+		</set>
+		where itemcouponId = #{itemcouponId,jdbcType=INTEGER}
+	</update>
+
+</mapper>

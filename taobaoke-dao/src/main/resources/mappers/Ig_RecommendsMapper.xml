@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.igogogo.dao.Ig_RecommendsMapper">
+	<resultMap id="BaseResultMap" type="com.igogogo.domain.Ig_Recommends">
+		<id column="recommendId" property="recommendid" jdbcType="INTEGER" />
+		<result column="recommendTitle" property="recommendtitle"
+			jdbcType="VARCHAR" />
+		<result column="recommendImg" property="recommendimg" jdbcType="VARCHAR" />
+		<result column="recommendClickUrl" property="recommendclickurl"
+			jdbcType="VARCHAR" />
+		<result column="recommendSort" property="recommendsort"
+			jdbcType="INTEGER" />
+		<result column="isdisplay" property="isdisplay" jdbcType="INTEGER" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		recommendId, recommendTitle, recommendImg,
+		recommendClickUrl, recommendSort,
+		isdisplay
+	</sql>
+
+	<select id="query" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from ig_recommends
+	</select>
+
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
+		parameterType="java.lang.Integer">
+		select
+		<include refid="Base_Column_List" />
+		from ig_recommends
+		where recommendId = #{recommendid,jdbcType=INTEGER}
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+		delete from
+		ig_recommends
+		where recommendId = #{recommendid,jdbcType=INTEGER}
+	</delete>
+	<insert id="insert" parameterType="com.igogogo.domain.Ig_Recommends">
+		insert into ig_recommends
+		(recommendId, recommendTitle, recommendImg,
+		recommendClickUrl,
+		recommendSort, isdisplay
+		)
+		values (#{recommendid,jdbcType=INTEGER},
+		#{recommendtitle,jdbcType=VARCHAR},
+		#{recommendimg,jdbcType=VARCHAR},
+		#{recommendclickurl,jdbcType=VARCHAR},
+		#{recommendsort,jdbcType=INTEGER}, #{isdisplay,jdbcType=INTEGER}
+		)
+	</insert>
+	<insert id="insertSelective" parameterType="com.igogogo.domain.Ig_Recommends">
+		insert into ig_recommends
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="recommendid != null">
+				recommendId,
+			</if>
+			<if test="recommendtitle != null">
+				recommendTitle,
+			</if>
+			<if test="recommendimg != null">
+				recommendImg,
+			</if>
+			<if test="recommendclickurl != null">
+				recommendClickUrl,
+			</if>
+			<if test="recommendsort != null">
+				recommendSort,
+			</if>
+			<if test="isdisplay != null">
+				isdisplay,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="recommendid != null">
+				#{recommendid,jdbcType=INTEGER},
+			</if>
+			<if test="recommendtitle != null">
+				#{recommendtitle,jdbcType=VARCHAR},
+			</if>
+			<if test="recommendimg != null">
+				#{recommendimg,jdbcType=VARCHAR},
+			</if>
+			<if test="recommendclickurl != null">
+				#{recommendclickurl,jdbcType=VARCHAR},
+			</if>
+			<if test="recommendsort != null">
+				#{recommendsort,jdbcType=INTEGER},
+			</if>
+			<if test="isdisplay != null">
+				#{isdisplay,jdbcType=INTEGER},
+			</if>
+		</trim>
+	</insert>
+	<update id="updateByPrimaryKeySelective" parameterType="com.igogogo.domain.Ig_Recommends">
+		update ig_recommends
+		<set>
+			<if test="recommendtitle != null">
+				recommendTitle = #{recommendtitle,jdbcType=VARCHAR},
+			</if>
+			<if test="recommendimg != null">
+				recommendImg = #{recommendimg,jdbcType=VARCHAR},
+			</if>
+			<if test="recommendclickurl != null">
+				recommendClickUrl =
+				#{recommendclickurl,jdbcType=VARCHAR},
+			</if>
+			<if test="recommendsort != null">
+				recommendSort = #{recommendsort,jdbcType=INTEGER},
+			</if>
+			<if test="isdisplay != null">
+				isdisplay = #{isdisplay,jdbcType=INTEGER},
+			</if>
+		</set>
+		where recommendId = #{recommendid,jdbcType=INTEGER}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.igogogo.domain.Ig_Recommends">
+		update
+		ig_recommends
+		set recommendTitle = #{recommendtitle,jdbcType=VARCHAR},
+		recommendImg = #{recommendimg,jdbcType=VARCHAR},
+		recommendClickUrl =
+		#{recommendclickurl,jdbcType=VARCHAR},
+		recommendSort =
+		#{recommendsort,jdbcType=INTEGER},
+		isdisplay =
+		#{isdisplay,jdbcType=INTEGER}
+		where recommendId =
+		#{recommendid,jdbcType=INTEGER}
+	</update>
+</mapper>

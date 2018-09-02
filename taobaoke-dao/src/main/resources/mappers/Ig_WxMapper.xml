@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.igogogo.dao.Ig_WxMapper">
+	<resultMap id="BaseResultMap" type="com.igogogo.domain.Ig_Wx">
+		<id column="wxId" property="wxid" jdbcType="INTEGER" />
+		<result column="openid" property="openid" jdbcType="VARCHAR" />
+		<result column="unionid" property="unionid" jdbcType="VARCHAR" />
+		<result column="nickName" property="nickname" jdbcType="VARCHAR" />
+		<result column="avatarUrl" property="avatarurl" jdbcType="VARCHAR" />
+		<result column="gender" property="gender" jdbcType="CHAR" />
+		<result column="city" property="city" jdbcType="VARCHAR" />
+		<result column="province" property="province" jdbcType="VARCHAR" />
+		<result column="country" property="country" jdbcType="VARCHAR" />
+		<result column="language" property="language" jdbcType="VARCHAR" />
+		<result column="addtime" property="addtime" jdbcType="TIMESTAMP" />
+		<result column="lasttime" property="lasttime" jdbcType="TIMESTAMP" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		wxId, openid, unionid, nickName, avatarUrl, gender, city,
+		province,
+		country, language,addtime,lasttime
+	</sql>
+
+	<select id="query" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from ig_wx
+	</select>
+
+	<select id="queryById" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+		select
+		<include refid="Base_Column_List" />
+		from ig_wx
+		where wxId = #{wxid,jdbcType=INTEGER}
+	</select>
+
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
+		parameterType="java.lang.Integer">
+		select
+		<include refid="Base_Column_List" />
+		from ig_wx
+		where wxId = #{wxid,jdbcType=INTEGER}
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+		delete from ig_wx
+		where wxId = #{wxid,jdbcType=INTEGER}
+	</delete>
+	<insert id="insert" parameterType="com.igogogo.domain.Ig_Wx">
+		insert into ig_wx (wxId,
+		openid, unionid,
+		nickName, avatarUrl, gender,
+		city, province, country,
+		language,addtime,lasttime)
+		values (#{wxid,jdbcType=INTEGER},
+		#{openid,jdbcType=VARCHAR},
+		#{unionid,jdbcType=VARCHAR},
+		#{nickname,jdbcType=VARCHAR},
+		#{avatarurl,jdbcType=VARCHAR},
+		#{gender,jdbcType=CHAR},
+		#{city,jdbcType=VARCHAR},
+		#{province,jdbcType=VARCHAR},
+		#{country,jdbcType=VARCHAR},
+		#{language,jdbcType=VARCHAR},
+		#{addtime,jdbcType=TIMESTAMP},
+		#{lasttime,jdbcType=TIMESTAMP})
+	</insert>
+	<insert id="insertSelective" parameterType="com.igogogo.domain.Ig_Wx">
+		insert into ig_wx
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="wxid != null">
+				wxId,
+			</if>
+			<if test="openid != null">
+				openid,
+			</if>
+			<if test="unionid != null">
+				unionid,
+			</if>
+			<if test="nickname != null">
+				nickName,
+			</if>
+			<if test="avatarurl != null">
+				avatarUrl,
+			</if>
+			<if test="gender != null">
+				gender,
+			</if>
+			<if test="city != null">
+				city,
+			</if>
+			<if test="province != null">
+				province,
+			</if>
+			<if test="country != null">
+				country,
+			</if>
+			<if test="language != null">
+				language,
+			</if>
+			<if test="addtime != null">
+				addtime,
+			</if>
+			<if test="lasttime != null">
+				lasttime,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="wxid != null">
+				#{wxid,jdbcType=INTEGER},
+			</if>
+			<if test="openid != null">
+				#{openid,jdbcType=VARCHAR},
+			</if>
+			<if test="unionid != null">
+				#{unionid,jdbcType=VARCHAR},
+			</if>
+			<if test="nickname != null">
+				#{nickname,jdbcType=VARCHAR},
+			</if>
+			<if test="avatarurl != null">
+				#{avatarurl,jdbcType=VARCHAR},
+			</if>
+			<if test="gender != null">
+				#{gender,jdbcType=CHAR},
+			</if>
+			<if test="city != null">
+				#{city,jdbcType=VARCHAR},
+			</if>
+			<if test="province != null">
+				#{province,jdbcType=VARCHAR},
+			</if>
+			<if test="country != null">
+				#{country,jdbcType=VARCHAR},
+			</if>
+			<if test="language != null">
+				#{language,jdbcType=VARCHAR},
+			</if>
+			<if test="addtime != null">
+				#{addtime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="lasttime != null">
+				#{lasttime,jdbcType=TIMESTAMP},
+			</if>
+		</trim>
+	</insert>
+	<update id="updateByPrimaryKeySelective" parameterType="com.igogogo.domain.Ig_Wx">
+		update ig_wx
+		<set>
+			<if test="openid != null">
+				openid = #{openid,jdbcType=VARCHAR},
+			</if>
+			<if test="unionid != null">
+				unionid = #{unionid,jdbcType=VARCHAR},
+			</if>
+			<if test="nickname != null">
+				nickName = #{nickname,jdbcType=VARCHAR},
+			</if>
+			<if test="avatarurl != null">
+				avatarUrl = #{avatarurl,jdbcType=VARCHAR},
+			</if>
+			<if test="gender != null">
+				gender = #{gender,jdbcType=CHAR},
+			</if>
+			<if test="city != null">
+				city = #{city,jdbcType=VARCHAR},
+			</if>
+			<if test="province != null">
+				province = #{province,jdbcType=VARCHAR},
+			</if>
+			<if test="country != null">
+				country = #{country,jdbcType=VARCHAR},
+			</if>
+			<if test="language != null">
+				language = #{language,jdbcType=VARCHAR},
+			</if>
+			<if test="addtime != null">
+				#{addtime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="lasttime != null">
+				#{lasttime,jdbcType=TIMESTAMP},
+			</if>
+		</set>
+		where wxId = #{wxid,jdbcType=INTEGER}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.igogogo.domain.Ig_Wx">
+		update ig_wx
+		set
+		openid = #{openid,jdbcType=VARCHAR},
+		unionid =
+		#{unionid,jdbcType=VARCHAR},
+		nickName = #{nickname,jdbcType=VARCHAR},
+		avatarUrl = #{avatarurl,jdbcType=VARCHAR},
+		gender =
+		#{gender,jdbcType=CHAR},
+		city = #{city,jdbcType=VARCHAR},
+		province =
+		#{province,jdbcType=VARCHAR},
+		country = #{country,jdbcType=VARCHAR},
+		language = #{language,jdbcType=VARCHAR},
+		addtime =
+		#{addtime,jdbcType=TIMESTAMP},
+		lasttime =
+		#{lasttime,jdbcType=TIMESTAMP}
+		where wxId =
+		#{wxid,jdbcType=INTEGER}
+	</update>
+</mapper>

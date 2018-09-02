@@ -1,0 +1,372 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.igogogo.dao.Ig_TqgMapper">
+	<resultMap id="BaseResultMap" type="com.igogogo.domain.Ig_Tqg">
+		<id column="tqgId" property="tqgId" jdbcType="INTEGER" />
+		<result column="numIid" property="numIid" jdbcType="BIGINT" />
+		<result column="title" property="title" jdbcType="VARCHAR" />
+		<result column="picUrl" property="picUrl" jdbcType="VARCHAR" />
+		<result column="smallImages" property="smallImages" jdbcType="VARCHAR" />
+		<result column="categoryName" property="categoryName" jdbcType="VARCHAR" />
+		<result column="clickUrl" property="clickUrl" jdbcType="VARCHAR" />
+		<result column="startTime" property="startTime" jdbcType="VARCHAR" />
+		<result column="endTime" property="endTime" jdbcType="VARCHAR" />
+		<result column="reservePrice" property="reservePrice" jdbcType="DOUBLE" />
+		<result column="zkFinalPrice" property="zkFinalPrice" jdbcType="DOUBLE" />
+		<result column="soldNum" property="soldNum" jdbcType="BIGINT" />
+		<result column="addTime" property="addTime" jdbcType="TIMESTAMP" />
+		<result column="shortUrl" property="shortUrl" jdbcType="VARCHAR" />
+		<result column="tpwd" property="tpwd" jdbcType="VARCHAR" />
+		<association property="category" column="categoryId"
+			select="com.igogogo.dao.Ig_CategoryMapper.selectByPrimaryKey"></association>
+	</resultMap>
+	<sql id="Base_Column_List">
+		tqgId, numIid, title, picUrl, smallImages, categoryName,
+		clickUrl,
+		startTime, endTime,
+		reservePrice, zkFinalPrice, soldNum,
+		categoryId, addTime, shortUrl,tpwd
+	</sql>
+
+	<select id="query" resultMap="BaseResultMap">
+		select
+		*
+		from ig_tqg
+	</select>
+
+	<select id="queryById" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+		select
+		*
+		from ig_tqg
+		where
+		tqgId =
+		#{tqgId,jdbcType=INTEGER}
+	</select>
+
+	<select id="queryCount" resultType="int">
+		select count(*) from ig_tqg
+	</select>
+
+	<select id="queryCountByKeyWord" resultType="int">
+		select count(*) from
+		ig_tqg where title like CONCAT('%',#{title},'%')
+	</select>
+
+	<select id="queryByPage" resultMap="BaseResultMap"
+		parameterType="map">
+		select
+		*
+		from ig_tqg
+		limit #{page},#{size}
+	</select>
+
+	<select id="queryKeyWordByPage" resultMap="BaseResultMap"
+		parameterType="map">
+		select
+		*
+		from ig_tqg where title like
+		CONCAT('%',#{title},'%')
+		limit
+		#{page},#{size}
+	</select>
+
+	<select id="queryByCondition" resultMap="BaseResultMap"
+		parameterType="map">
+		select
+		*
+		from ig_tqg
+		where ${columnname} =
+		'${columnval}'
+	</select>
+
+	<select id="queryByConditionByPage" resultMap="BaseResultMap"
+		parameterType="map">
+		select
+		*
+		from ig_tqg
+		where ${columnname} = ${columnval}
+		limit
+		#{page},#{size}
+	</select>
+
+	<delete id="deleteByMoreId">
+		delete from ig_tqg
+		where tqgId in
+		<foreach item="item" index="index" collection="list" open="("
+			separator="," close=")">
+			#{item}
+		</foreach>
+	</delete>
+
+	<select id="checkById" resultMap="BaseResultMap" parameterType="java.lang.Long">
+		select
+		<include refid="Base_Column_List" />
+		from ig_tqg_temp
+		where numIid = #{numIid}
+	</select>
+
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
+		parameterType="java.lang.Integer">
+		select
+		<include refid="Base_Column_List" />
+		from ig_tqg
+		where tqgId = #{tqgId,jdbcType=INTEGER}
+	</select>
+
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+		delete from ig_tqg
+		where tqgId = #{tqgId,jdbcType=INTEGER}
+	</delete>
+
+
+	<insert id="insertSelective" parameterType="com.igogogo.domain.Ig_Tqg">
+		insert into ig_tqg
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="numIid != null">
+				numIid,
+			</if>
+			<if test="title != null">
+				title,
+			</if>
+			<if test="picUrl != null">
+				picUrl,
+			</if>
+			<if test="smallImages != null">
+				smallImages,
+			</if>
+			<if test="categoryName != null">
+				categoryName,
+			</if>
+			<if test="clickUrl != null">
+				clickUrl,
+			</if>
+			<if test="startTime != null">
+				startTime,
+			</if>
+			<if test="endTime != null">
+				endTime,
+			</if>
+			<if test="reservePrice != null">
+				reservePrice,
+			</if>
+			<if test="zkFinalPrice != null">
+				zkFinalPrice,
+			</if>
+			<if test="soldNum != null">
+				soldNum,
+			</if>
+			<if test="category != null and category.categoryid != null">
+				categoryId,
+			</if>
+			<if test="addTime != null">
+				addTime,
+			</if>
+			<if test="shortUrl != null">
+				shortUrl,
+			</if>
+			<if test="tpwd != null">
+				tpwd,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="numIid != null">
+				#{numIid,jdbcType=BIGINT},
+			</if>
+			<if test="title != null">
+				#{title,jdbcType=VARCHAR},
+			</if>
+			<if test="picUrl != null">
+				#{picUrl,jdbcType=VARCHAR},
+			</if>
+			<if test="smallImages != null">
+				#{smallImages,jdbcType=VARCHAR},
+			</if>
+			<if test="categoryName != null">
+				#{categoryName,jdbcType=VARCHAR},
+			</if>
+			<if test="clickUrl != null">
+				#{clickUrl,jdbcType=VARCHAR},
+			</if>
+			<if test="startTime != null">
+				#{startTime,jdbcType=VARCHAR},
+			</if>
+			<if test="endTime != null">
+				#{endTime,jdbcType=VARCHAR},
+			</if>
+			<if test="reservePrice != null">
+				#{reservePrice,jdbcType=DOUBLE},
+			</if>
+			<if test="zkFinalPrice != null">
+				#{zkFinalPrice,jdbcType=DOUBLE},
+			</if>
+			<if test="soldNum != null">
+				#{soldNum,jdbcType=BIGINT},
+			</if>
+			<if test="category != null and category.categoryid != null">
+				#{category.categoryid,jdbcType=INTEGER},
+			</if>
+			<if test="addTime != null">
+				#{addTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="shortUrl != null">
+				#{shortUrl,jdbcType=VARCHAR},
+			</if>
+			<if test="tpwd != null">
+				#{tpwd,jdbcType=VARCHAR},
+			</if>
+		</trim>
+	</insert>
+
+	<!-- 临时表 -->
+	<insert id="insertSelectiveTemp" parameterType="com.igogogo.domain.Ig_Tqg">
+		insert into ig_tqg_temp
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="numIid != null">
+				numIid,
+			</if>
+			<if test="title != null">
+				title,
+			</if>
+			<if test="picUrl != null">
+				picUrl,
+			</if>
+			<if test="smallImages != null">
+				smallImages,
+			</if>
+			<if test="categoryName != null">
+				categoryName,
+			</if>
+			<if test="clickUrl != null">
+				clickUrl,
+			</if>
+			<if test="startTime != null">
+				startTime,
+			</if>
+			<if test="endTime != null">
+				endTime,
+			</if>
+			<if test="reservePrice != null">
+				reservePrice,
+			</if>
+			<if test="zkFinalPrice != null">
+				zkFinalPrice,
+			</if>
+			<if test="soldNum != null">
+				soldNum,
+			</if>
+			<if test="category != null and category.categoryid != null">
+				categoryId,
+			</if>
+			<if test="addTime != null">
+				addTime,
+			</if>
+			<if test="shortUrl != null">
+				shortUrl,
+			</if>
+			<if test="tpwd != null">
+				tpwd,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="numIid != null">
+				#{numIid,jdbcType=BIGINT},
+			</if>
+			<if test="title != null">
+				#{title,jdbcType=VARCHAR},
+			</if>
+			<if test="picUrl != null">
+				#{picUrl,jdbcType=VARCHAR},
+			</if>
+			<if test="smallImages != null">
+				#{smallImages,jdbcType=VARCHAR},
+			</if>
+			<if test="categoryName != null">
+				#{categoryName,jdbcType=VARCHAR},
+			</if>
+			<if test="clickUrl != null">
+				#{clickUrl,jdbcType=VARCHAR},
+			</if>
+			<if test="startTime != null">
+				#{startTime,jdbcType=VARCHAR},
+			</if>
+			<if test="endTime != null">
+				#{endTime,jdbcType=VARCHAR},
+			</if>
+			<if test="reservePrice != null">
+				#{reservePrice,jdbcType=DOUBLE},
+			</if>
+			<if test="zkFinalPrice != null">
+				#{zkFinalPrice,jdbcType=DOUBLE},
+			</if>
+			<if test="soldNum != null">
+				#{soldNum,jdbcType=BIGINT},
+			</if>
+			<if test="category != null and category.categoryid != null">
+				#{category.categoryid,jdbcType=INTEGER},
+			</if>
+			<if test="addTime != null">
+				#{addTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="shortUrl != null">
+				#{shortUrl,jdbcType=VARCHAR},
+			</if>
+			<if test="tpwd != null">
+				#{tpwd,jdbcType=VARCHAR},
+			</if>
+		</trim>
+	</insert>
+
+	<update id="updateByPrimaryKeySelective" parameterType="com.igogogo.domain.Ig_Tqg">
+		update ig_tqg
+		<set>
+			<if test="numIid != null">
+				numIid = #{numIid,jdbcType=BIGINT},
+			</if>
+			<if test="title != null">
+				title = #{title,jdbcType=VARCHAR},
+			</if>
+			<if test="picUrl != null">
+				picUrl = #{picUrl,jdbcType=VARCHAR},
+			</if>
+			<if test="smallImages != null">
+				smallImages = #{smallImages,jdbcType=VARCHAR},
+			</if>
+			<if test="categoryName != null">
+				categoryName = #{categoryName,jdbcType=VARCHAR},
+			</if>
+			<if test="clickUrl != null">
+				clickUrl = #{clickUrl,jdbcType=VARCHAR},
+			</if>
+			<if test="startTime != null">
+				startTime = #{startTime,jdbcType=VARCHAR},
+			</if>
+			<if test="endTime != null">
+				endTime = #{endTime,jdbcType=VARCHAR},
+			</if>
+			<if test="reservePrice != null">
+				reservePrice = #{reservePrice,jdbcType=DOUBLE},
+			</if>
+			<if test="zkFinalPrice != null">
+				zkFinalPrice = #{zkFinalPrice,jdbcType=DOUBLE},
+			</if>
+			<if test="soldNum != null">
+				soldNum = #{soldNum,jdbcType=BIGINT},
+			</if>
+			<if test="category != null and category.categoryid != null">
+				categoryId = #{category.categoryid,jdbcType=INTEGER},
+			</if>
+			<if test="addTime != null">
+				addTime = #{addTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="shortUrl != null">
+				shortUrl = #{shortUrl,jdbcType=VARCHAR},
+			</if>
+			<if test="tpwd != null">
+				tpwd = #{tpwd,jdbcType=VARCHAR},
+			</if>
+		</set>
+		where tqgId = #{tqgId,jdbcType=INTEGER}
+	</update>
+
+
+</mapper>

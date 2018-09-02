@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.igogogo.dao.Ig_KeywordMapper">
+	<resultMap id="BaseResultMap" type="com.igogogo.domain.Ig_Keyword">
+		<id column="keyId" property="keyid" jdbcType="INTEGER" />
+		<result column="keyWord" property="keyword" jdbcType="VARCHAR" />
+		<result column="keyCount" property="keycount" jdbcType="INTEGER" />
+		<result column="isdisplay" property="isdisplay" jdbcType="INTEGER" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		keyId, keyWord, keyCount, isdisplay
+	</sql>
+
+	<select id="query" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from ig_keyword
+	</select>
+
+	<select id="queryById" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+		select
+		<include refid="Base_Column_List" />
+		from ig_keyword
+		where keyId = #{keyid,jdbcType=INTEGER}
+	</select>
+
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
+		parameterType="java.lang.Integer">
+		select
+		<include refid="Base_Column_List" />
+		from ig_keyword
+		where keyId = #{keyid,jdbcType=INTEGER}
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+		delete from
+		ig_keyword
+		where keyId = #{keyid,jdbcType=INTEGER}
+	</delete>
+	<insert id="insert" parameterType="com.igogogo.domain.Ig_Keyword">
+		insert into ig_keyword (keyId,
+		keyWord, keyCount,
+		isdisplay)
+		values (#{keyid,jdbcType=INTEGER},
+		#{keyword,jdbcType=VARCHAR},
+		#{keycount,jdbcType=INTEGER},
+		#{isdisplay,jdbcType=INTEGER})
+	</insert>
+	<insert id="insertSelective" parameterType="com.igogogo.domain.Ig_Keyword">
+		insert into ig_keyword
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="keyid != null">
+				keyId,
+			</if>
+			<if test="keyword != null">
+				keyWord,
+			</if>
+			<if test="keycount != null">
+				keyCount,
+			</if>
+			<if test="isdisplay != null">
+				isdisplay,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="keyid != null">
+				#{keyid,jdbcType=INTEGER},
+			</if>
+			<if test="keyword != null">
+				#{keyword,jdbcType=VARCHAR},
+			</if>
+			<if test="keycount != null">
+				#{keycount,jdbcType=INTEGER},
+			</if>
+			<if test="isdisplay != null">
+				#{isdisplay,jdbcType=INTEGER},
+			</if>
+		</trim>
+	</insert>
+	<update id="updateByPrimaryKeySelective" parameterType="com.igogogo.domain.Ig_Keyword">
+		update ig_keyword
+		<set>
+			<if test="keyword != null">
+				keyWord = #{keyword,jdbcType=VARCHAR},
+			</if>
+			<if test="keycount != null">
+				keyCount = #{keycount,jdbcType=INTEGER},
+			</if>
+			<if test="isdisplay != null">
+				isdisplay = #{isdisplay,jdbcType=INTEGER},
+			</if>
+		</set>
+		where keyId = #{keyid,jdbcType=INTEGER}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.igogogo.domain.Ig_Keyword">
+		update ig_keyword
+		set keyWord = #{keyword,jdbcType=VARCHAR},
+		keyCount =
+		#{keycount,jdbcType=INTEGER},
+		isdisplay = #{isdisplay,jdbcType=INTEGER}
+		where keyId = #{keyid,jdbcType=INTEGER}
+	</update>
+</mapper>

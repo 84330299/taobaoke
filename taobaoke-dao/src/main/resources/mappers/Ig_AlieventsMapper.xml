@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.igogogo.dao.Ig_AlieventsMapper">
+	<resultMap id="BaseResultMap" type="com.igogogo.domain.Ig_Alievents">
+		<id column="eventId" property="eventid" jdbcType="INTEGER" />
+		<result column="eventPic" property="eventpic" jdbcType="VARCHAR" />
+		<result column="eventTitle" property="eventtitle" jdbcType="VARCHAR" />
+		<result column="eventUrl" property="eventurl" jdbcType="VARCHAR" />
+		<result column="eventOrder" property="eventorder" jdbcType="INTEGER" />
+		<result column="eventPlatform" property="eventplatform"
+			jdbcType="VARCHAR" />
+		<result column="addTime" property="addtime" jdbcType="TIMESTAMP" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		eventId, eventPic, eventTitle, eventUrl, eventOrder,
+		eventPlatform, addTime
+	</sql>
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
+		parameterType="java.lang.Integer">
+		select
+		<include refid="Base_Column_List" />
+		from ig_alievents
+		where eventId = #{eventid,jdbcType=INTEGER}
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+		delete from
+		ig_alievents
+		where eventId = #{eventid,jdbcType=INTEGER}
+	</delete>
+
+	<insert id="insertSelective" parameterType="com.igogogo.domain.Ig_Alievents">
+		insert into ig_alievents
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="eventid != null">
+				eventId,
+			</if>
+			<if test="eventpic != null">
+				eventPic,
+			</if>
+			<if test="eventtitle != null">
+				eventTitle,
+			</if>
+			<if test="eventurl != null">
+				eventUrl,
+			</if>
+			<if test="eventorder != null">
+				eventOrder,
+			</if>
+			<if test="eventplatform != null">
+				eventPlatform,
+			</if>
+			<if test="addtime != null">
+				addTime,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="eventid != null">
+				#{eventid,jdbcType=INTEGER},
+			</if>
+			<if test="eventpic != null">
+				#{eventpic,jdbcType=VARCHAR},
+			</if>
+			<if test="eventtitle != null">
+				#{eventtitle,jdbcType=VARCHAR},
+			</if>
+			<if test="eventurl != null">
+				#{eventurl,jdbcType=VARCHAR},
+			</if>
+			<if test="eventorder != null">
+				#{eventorder,jdbcType=INTEGER},
+			</if>
+			<if test="eventplatform != null">
+				#{eventplatform,jdbcType=VARCHAR},
+			</if>
+			<if test="addtime != null">
+				#{addtime,jdbcType=TIMESTAMP},
+			</if>
+		</trim>
+	</insert>
+	<update id="updateByPrimaryKeySelective" parameterType="com.igogogo.domain.Ig_Alievents">
+		update ig_alievents
+		<set>
+			<if test="eventpic != null">
+				eventPic = #{eventpic,jdbcType=VARCHAR},
+			</if>
+			<if test="eventtitle != null">
+				eventTitle = #{eventtitle,jdbcType=VARCHAR},
+			</if>
+			<if test="eventurl != null">
+				eventUrl = #{eventurl,jdbcType=VARCHAR},
+			</if>
+			<if test="eventorder != null">
+				eventOrder = #{eventorder,jdbcType=INTEGER},
+			</if>
+			<if test="eventplatform != null">
+				eventPlatform = #{eventplatform,jdbcType=VARCHAR},
+			</if>
+			<if test="addtime != null">
+				addTime = #{addtime,jdbcType=TIMESTAMP},
+			</if>
+		</set>
+		where eventId = #{eventid,jdbcType=INTEGER}
+	</update>
+
+
+</mapper>

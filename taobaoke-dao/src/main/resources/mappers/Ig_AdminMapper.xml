@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.igogogo.dao.Ig_AdminMapper">
+	<resultMap id="BaseResultMap" type="com.igogogo.domain.Ig_Admin">
+		<id column="adminId" property="adminid" jdbcType="INTEGER" />
+		<result column="adminName" property="adminname" jdbcType="VARCHAR" />
+		<result column="adminPwd" property="adminpwd" jdbcType="VARCHAR" />
+		<result column="adminLastLoginTime" property="adminlastlogintime"
+			jdbcType="TIMESTAMP" />
+		<result column="addTime" property="addtime" jdbcType="TIMESTAMP" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		adminId, adminName, adminPwd, adminLastLoginTime, addTime
+	</sql>
+
+	<select id="query" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from ig_admin
+	</select>
+
+	<select id="login" parameterType="com.igogogo.domain.Ig_Admin"
+		resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from ig_admin
+		where adminName = #{adminname} and adminPwd = #{adminpwd}
+	</select>
+
+	<select id="checkAccount" parameterType="com.igogogo.domain.Ig_Admin"
+		resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from ig_admin
+		where adminName = #{adminname}
+	</select>
+
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
+		parameterType="java.lang.Integer">
+		select
+		<include refid="Base_Column_List" />
+		from ig_admin
+		where adminId = #{adminid,jdbcType=INTEGER}
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+		delete from
+		ig_admin
+		where adminId = #{adminid,jdbcType=INTEGER}
+	</delete>
+
+	<insert id="insertSelective" parameterType="com.igogogo.domain.Ig_Admin">
+		insert into ig_admin
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="adminid != null">
+				adminId,
+			</if>
+			<if test="adminname != null">
+				adminName,
+			</if>
+			<if test="adminpwd != null">
+				adminPwd,
+			</if>
+			<if test="adminlastlogintime != null">
+				adminLastLoginTime,
+			</if>
+			<if test="addtime != null">
+				addTime,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="adminid != null">
+				#{adminid,jdbcType=INTEGER},
+			</if>
+			<if test="adminname != null">
+				#{adminname,jdbcType=VARCHAR},
+			</if>
+			<if test="adminpwd != null">
+				#{adminpwd,jdbcType=VARCHAR},
+			</if>
+			<if test="adminlastlogintime != null">
+				#{adminlastlogintime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="addtime != null">
+				#{addtime,jdbcType=TIMESTAMP},
+			</if>
+		</trim>
+	</insert>
+	<update id="updateByPrimaryKeySelective" parameterType="com.igogogo.domain.Ig_Admin">
+		update ig_admin
+		<set>
+			<if test="adminname != null">
+				adminName = #{adminname,jdbcType=VARCHAR},
+			</if>
+			<if test="adminpwd != null">
+				adminPwd = #{adminpwd,jdbcType=VARCHAR},
+			</if>
+			<if test="adminlastlogintime != null">
+				adminLastLoginTime =
+				#{adminlastlogintime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="addtime != null">
+				addTime = #{addtime,jdbcType=TIMESTAMP},
+			</if>
+		</set>
+		where adminId = #{adminid,jdbcType=INTEGER}
+	</update>
+
+
+</mapper>
